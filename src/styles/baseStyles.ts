@@ -10,5 +10,6 @@ export const color = {
   borderBottomGrey: "#D1D0D2",
   white: "white",
   black: "#546E7A",
-  green:"#B0BEC5"
+  green:"#B0BEC5",
+  blue_facebook:'#385699'
 };

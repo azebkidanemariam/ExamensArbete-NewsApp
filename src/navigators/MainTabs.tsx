@@ -1,12 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "../screens/main/Home";
 import Settings from "../screens/main/Settings";
 import Favorites from "../screens/main/Favorites";
 import Discover from "../screens/main/Discover";
 import Music from "../screens/main/Music";
 import { color } from "../styles/baseStyles";
 import { HomeIcon, SettingsIcon, MusicIcon,DiscoverIcon,HeartIcon } from "../components/icons";
-
+import HomeStack from "./Homestack";
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +46,7 @@ const MainTabNavigator = () => {
       
     })}
   >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Discover" component={Discover} />
       <Tab.Screen name="Favorites" component={Favorites} />
       <Tab.Screen name="Music" component={Music} />

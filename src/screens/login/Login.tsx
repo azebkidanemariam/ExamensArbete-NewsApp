@@ -1,31 +1,84 @@
-import { useContext, useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { useContext, useState, useEffect } from "react";
+import {
+  View,
+  TextInput,
+  Pressable,
+  Text,
+  KeyboardAvoidingView,
+  Alert,
+} from "react-native";
 import { UserContext } from "../../contexts/user/UserContext";
-import globalStyles from "../../styles/styles";
-import Button from "../../components/Button";
-import Logo from "../../components/Logo";
 import { useNavigation } from "@react-navigation/native";
+import Button from "../../components/Button";
+import Separator from "../../components/Separator";
+import Logo from "../../components/Logo";
+import AuthButtons from "../../components/AuthButtons";
+import globalStyles from "../../styles/styles";
+import styles from "./styles";
 
 const Login: React.FC = () => {
   const navigation = useNavigation();
-  const { login } = useContext(UserContext)!;
+  const { login, getStorageData, errorState, setErrorState } =
+    useContext(UserContext)!;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const handleLogin = () => {
     login(email, password);
-    console.log("In handleLogin");
-  };
-  const handleCreateAccount = () => {
-    //@ts-ignore
-    navigation.navigate("Välj plan");
   };
 
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Kunde inte logga in!",
+      "Något har gått fel, kolla email och lösenord och försök igen.",
+      [{ text: "OK", onPress: () => setErrorState(false) }]
+    );
+
+  useEffect(() => {
+    if (errorState) {
+      createTwoButtonAlert();
+    }
+  }, [errorState]);
+
+  const handleCreateAccount = () => {
+    //@ts-ignore
+    // navigation.replace("Personuppgifter");
+    navigation.navigate("Personuppgifter");
+  };
+
+  const resetPassword = () => {
+    //@ts-ignore
+    navigation.navigate("Glömt lösenord");
+  };
+
+  useEffect(() => {
+    getStorageData();
+  }, []);
+
   return (
+    // <KeyboardAvoidingView >
     <View style={globalStyles.container}>
       <View style={styles.logoView}>
         <Logo width={150} height={75} />
       </View>
+
+      <AuthButtons
+        paddingVertical={15}
+        onPress={handleLogin}
+        source={require("../../../assets/facebook.png")}
+        title={"Logga in med Facebook"}
+        google={false}
+        facebook={true}
+      />
+      <AuthButtons
+        paddingVertical={15}
+        onPress={handleLogin}
+        source={require("../../../assets/google.png")}
+        title={"Logga in med google"}
+        google={true}
+        facebook={false}
+      />
+      <Separator />
       <TextInput
         style={globalStyles.textInput}
         value={email}
@@ -45,15 +98,17 @@ const Login: React.FC = () => {
       />
 
       <Button text="LOGGA IN" onPress={handleLogin} />
+
+      <Pressable onPress={resetPassword}>
+        <Text style={styles.resetPassword}>Glömt lösenord?</Text>
+      </Pressable>
+
+      <Separator />
+
       <Button text="SKAPA NYTT KONTO" onPress={handleCreateAccount} />
     </View>
+    // </KeyboardAvoidingView>
   );
 };
-const styles = StyleSheet.create({
-  logoView: {
-    top: 100,
-    position: "absolute",
-  },
-});
 
 export default Login;

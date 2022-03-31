@@ -1,37 +1,93 @@
 import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { ContentContextInterface, Article, Plan } from "./types";
+import {
+  ContentContextInterface,
+  Pagination,
+  Article,
+  Celebrity,
+  Ad,
+} from "./types";
 import { UserContext } from "../user/UserContext";
+import * as API from "./api";
+import { filterUnrelatedContent } from "./utils";
 
 export const ContentContext =
   React.createContext<ContentContextInterface | null>(null);
 
 const ContentContextProvider: React.FC = (props) => {
-  const { token } = useContext(UserContext)!;
 
+  const { token } = useContext(UserContext)!;
   const [articles, setArticles] = useState<Article[]>([]);
-  const [plans, setPlans] = useState<Plan[]>([]);
+const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
+  const [ads, setAds] = useState<Ad[]>([]);
+  const [contentError, setContentError] = useState(false);
+  const [pagination, setPagination] = useState<Pagination>({
+    skip: 0,
+    limit: 5,
+    next: 5
+  })
 
   useEffect(() => {
     if (token) {
-      axios
-        .get("http://localhost:3000/api/content/articles", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-          setArticles(response.data.content);
-        });
+      (async () => {
+        const response = await API.getArticles(pagination, token);
+
+        if (response) {          
+          setArticles(response.articles)
+          setPagination(response.pagination)
+        }        
+      })();
     }
   }, [token]);
 
+
   useEffect(() => {
-    axios.get("http://localhost:3000/api/content/plans").then((response) => {
-      console.log(response.data.content)
-      setPlans(response.data.content);
-    });
+    (async () => {
+      const fetchedCelebrities = await API.getCelebrities();
+
+      if (fetchedCelebrities) {
+        setCelebrities(fetchedCelebrities);
+      }
+    })();
   }, []);
 
-  const contentContext: ContentContextInterface = { articles,plans };
+  const fetchNextArticles = async () => {   
+    if (!pagination.next || pagination.next! >= pagination.total!) return
+    
+    pagination.skip = pagination.next!
+
+    const response = await API.getArticles(pagination, token!);
+        if (response) {    
+          setArticles([...articles, ...response.articles])
+          setPagination(response.pagination)
+        }
+  }
+
+  const getCelebrityArticles = async (celebrityId: string) => {
+    const celebArticles = await API.getCelebArticles(celebrityId, token!);
+
+    return celebArticles || [];
+  };
+
+  useEffect(() => {
+    (async () => {
+      const fetchedAds = await API.getAds();
+
+      if (fetchedAds) {
+        setAds(fetchedAds);
+      }
+    })();
+  }, []);
+
+  const contentContext: ContentContextInterface = {
+    articles,
+    fetchNextArticles,
+    celebrities,
+    ads,
+    getCelebrityArticles,
+    setContentError,
+    contentError,
+  };
+
   return (
     <ContentContext.Provider value={contentContext}>
       {props.children}
@@ -40,3 +96,4 @@ const ContentContextProvider: React.FC = (props) => {
 };
 
 export default ContentContextProvider;
+

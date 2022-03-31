@@ -1,6 +1,18 @@
 export interface ContentContextInterface {
   articles: Article[];
-  plans:Plan[]
+  fetchNextArticles: () => void;
+  celebrities: Celebrity[];
+  ads: Ad[];
+  getCelebrityArticles: (celebrityId: string) => Promise<Article[]>;
+  setContentError: React.Dispatch<React.SetStateAction<boolean>>;
+  contentError: boolean;
+}
+
+export interface Pagination {
+  total?: number;
+  skip: number;
+  limit: number;
+  next?: number;
 }
 
 export interface Content {
@@ -15,10 +27,14 @@ export interface Article extends Content {
   fields: {
     headline: string;
     preamble: string;
-    body: object;
-    images: ContentImage[];
+    body: {
+      content: any;
+    };
+    images?: ContentImage[];
     featureImage: ContentImage;
-    tags: Tag[];
+    ads: Ad[];
+    video?: ContentVideo;
+    featuredContent?: string[]
   };
 }
 
@@ -29,33 +45,27 @@ export interface ContentImage extends Content {
     };
   };
 }
+export interface ContentVideo extends Content {
+  fields: {
+    file: {
+      url: string;
+    };
+  };
+}
 
 export interface Celebrity extends Content {
   fields: {
     name: string;
-    bio: object;
-    images: ContentImage[];
+    bio: { content: any[] };
+    image: ContentImage;
     articles: Article[];
   };
 }
 
-export interface Tag extends Content {
+export interface Ad extends Content {
   fields: {
-    name: string;
-  };
-}
-
-export interface Category extends Content {
-  fields: {
-    title: string;
-    tags: Tag[];
-  };
-}
-export interface Plan extends Content {
-  fields: {
-    title: string;
-    price:number;
-    descriptionList:string[];
-    uspList:string[];
+    text: string;
+    image: ContentImage;
+    url: string;
   };
 }
