@@ -25,6 +25,7 @@ export interface Content {
 
 export interface Article extends Content {
   fields: {
+    title:string;
     headline: string;
     preamble: string;
     body: {

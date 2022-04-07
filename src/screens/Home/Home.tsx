@@ -15,6 +15,7 @@ import { UserContext } from "../../contexts/user/UserContext";
 import { Article } from "../../contexts/content/types";
 import { useNavigation } from "@react-navigation/native";
 import globalStyles from "../../styles/styles";
+import Styles from "./styles";
 import Button from "../../components/Button";
 import Logo from "../../components/Logo";
 
@@ -35,15 +36,19 @@ const Home: React.FC = () => {
     setContentError(false);
     logout();
   };
+ 
 
   const renderItem: ListRenderItem<Article> = ({ item }) => {
     if (item.fields.featureImage) {
       return (
         <>
+
+        <Text style={Styles.headText}>{item.fields.title}</Text>
           <Pressable
             onPress={() => handleArticle(item)}
             style={[globalStyles.articleCard]}
           >
+             
             <LinearGradient
               style={globalStyles.gradient}
               colors={["transparent", "rgba(0,0,0,0.8)"]}
@@ -56,9 +61,12 @@ const Home: React.FC = () => {
                   uri: `https:${item.fields.featureImage.fields.file.url}`,
                 }}
               />
-              <Text style={globalStyles.headline}>{item.fields.headline}</Text>
+             
             </>
           </Pressable>
+          <Text style={globalStyles.headline}>{item.fields.headline}</Text>
+              <Text style={Styles.preamble}>{item.fields.preamble}</Text>
+              <View style={Styles.articleDivider}></View>
           <Modal
             animationType="slide"
             transparent={false}

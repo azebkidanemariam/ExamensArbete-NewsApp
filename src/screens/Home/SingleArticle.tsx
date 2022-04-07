@@ -26,19 +26,18 @@ import {
   
   const SingleArticle = (props: ArticleProps) => {
     const navigation = useNavigation();
-    const { articles, ads } = useContext(ContentContext)!;
-  /*   const { user, removeCategory, setCategories, addFollow, removeFollow } =
-      useContext(UserContext)!; */
+    const { articles } = useContext(ContentContext)!;
+
     const {
+      title,
       headline,
       preamble,
       body,
       images,
       featureImage,
       video,
-      /* celebrities,
-      categories, */
     } = props.route.params.article.fields;
+  console.log(preamble[0]);
   
     const [selected, setSelected] = useState<string[]>([]);
   

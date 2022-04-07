@@ -44,13 +44,14 @@ export default StyleSheet.create({
     borderRadius: 5,
   },
   headline: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "800",
+    color: color.black,
+    fontSize: 18,
+    fontWeight: 'bold',
     paddingHorizontal: 5,
     paddingBottom: 5,
-    marginTop: -20,
-    zIndex: 20,
+    marginTop: 20,
+    marginBottom:5,
+    /* zIndex: 20, */
   },
   headlineBio: {
     color: "#fff",
@@ -111,6 +112,7 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 5,
+    color:'black'
   },
   celebrityImage: {
     width: 204,

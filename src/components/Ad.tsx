@@ -53,7 +53,7 @@ import {
     adWrapper: {
       paddingHorizontal: 10,
       marginVertical: 10,
-      backgroundColor:'pink'
+      
     },
     text:{
         marginBottom:10
