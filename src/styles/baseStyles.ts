@@ -5,7 +5,7 @@ export const color = {
   pink: "#4E6AF5",
   darkGrey: "#959496",
   darkBlue: "#2B4188",
-  lightGrey: "#CEE9F5",
+  lightGrey: "#CFD8DC",
   borderGrey: "#706F70",
   borderBottomGrey: "#D1D0D2",
   white: "white",

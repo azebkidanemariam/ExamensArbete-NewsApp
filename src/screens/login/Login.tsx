@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import Button from "../../components/Button";
 import Separator from "../../components/Separator";
 import Logo from "../../components/Logo";
-import AuthButtons from "../../components/AuthButtons";
+/* import AuthButtons from "../../components/AuthButtons"; */
 import globalStyles from "../../styles/styles";
 import styles from "./styles";
 
@@ -59,10 +59,16 @@ const Login: React.FC = () => {
     // <KeyboardAvoidingView >
     <View style={globalStyles.container}>
       <View style={styles.logoView}>
-        <Logo width={150} height={75} />
+        {/* <View>
+
+      <Image
+      source={require("../../assets/favicon.png")}
+    />
+        </View> */}
+        {/* <Logo width={150} height={75} /> */}
       </View>
 
-      <AuthButtons
+     {/*  <AuthButtons
         paddingVertical={15}
         onPress={handleLogin}
         source={require("../../../assets/facebook.png")}
@@ -77,8 +83,8 @@ const Login: React.FC = () => {
         title={"Logga in med google"}
         google={true}
         facebook={false}
-      />
-      <Separator />
+      /> */}
+      {/* <Separator /> */}
       <TextInput
         style={globalStyles.textInput}
         value={email}
@@ -97,7 +103,7 @@ const Login: React.FC = () => {
         // secureTextEntry
       />
 
-      <Button text="LOGGA IN" onPress={handleLogin} />
+      <Button text="Login" onPress={handleLogin} />
 
       <Pressable onPress={resetPassword}>
         <Text style={styles.resetPassword}>Glömt lösenord?</Text>
@@ -105,7 +111,7 @@ const Login: React.FC = () => {
 
       <Separator />
 
-      <Button text="SKAPA NYTT KONTO" onPress={handleCreateAccount} />
+      <Button text="Create New Account" onPress={handleCreateAccount} />
     </View>
     // </KeyboardAvoidingView>
   );
