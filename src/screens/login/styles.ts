@@ -83,7 +83,7 @@ export default StyleSheet.create({
 
   boldText: {
     textAlign: "center",
-    color: color.black,
+    color: color.lightgreen,
     fontWeight: "700",
   },
 
@@ -207,5 +207,6 @@ export default StyleSheet.create({
 
   passwordConditions: {
     paddingHorizontal: 8
-  }
+  },
+  
 });

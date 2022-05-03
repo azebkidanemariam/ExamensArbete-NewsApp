@@ -22,8 +22,8 @@ const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
   const [contentError, setContentError] = useState(false);
   const [pagination, setPagination] = useState<Pagination>({
     skip: 0,
-    limit: 5,
-    next: 5
+    limit: 10,
+    next: 10
   })
 
   useEffect(() => {
