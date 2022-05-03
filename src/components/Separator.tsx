@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
       line: {
         borderColor: color.darkGrey,
         borderWidth: 0.5,
+        borderStyle: 'dotted',
         width: "30%",
         marginHorizontal: 20,
       },

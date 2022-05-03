@@ -2,6 +2,13 @@ import { color } from "../../styles/baseStyles";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#CEE9F5',
+    alignItems: "center",
+    justifyContent: "center",
+    
+  },
   featureImage: {
     height: 563,
     width: "100%",
@@ -74,27 +81,35 @@ const styles = StyleSheet.create({
     backgroundColor: "pink",
   },
   preamble: {
-    fontWeight: "300",
+    fontWeight: "normal",
     fontSize: 13,
     fontFamily: "Arial",
+    lineHeight:15,
+    letterSpacing:0.2,
     marginTop: 5,
-    marginBottom: 50,
-    paddingHorizontal: 5,
+    marginBottom: 20,
+    paddingHorizontal: 20,
     paddingBottom: 20,
   },
   articleDivider: {
     alignSelf: "center",
-    borderBottomColor: color.black,
+    borderBottomColor: color.white,
     marginBottom: 20,
     height: 20,
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 7,
     width: "100%",
+    
   },
   headText:{
-    alignItems:'center',
+    justifyContent:'center',
+    alignSelf:'center',
     paddingHorizontal:10,
+    paddingTop:20,
     paddingBottom:10,
-    color:'#C04000'
+    color:color.lightgreen,
+    fontSize:17,
+    fontWeight:"bold",
+    
   }
 });
 export default styles;

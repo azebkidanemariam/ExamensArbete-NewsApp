@@ -58,33 +58,6 @@ const Login: React.FC = () => {
   return (
     // <KeyboardAvoidingView >
     <View style={globalStyles.container}>
-      <View style={styles.logoView}>
-        {/* <View>
-
-      <Image
-      source={require("../../assets/favicon.png")}
-    />
-        </View> */}
-        {/* <Logo width={150} height={75} /> */}
-      </View>
-
-     {/*  <AuthButtons
-        paddingVertical={15}
-        onPress={handleLogin}
-        source={require("../../../assets/facebook.png")}
-        title={"Logga in med Facebook"}
-        google={false}
-        facebook={true}
-      />
-      <AuthButtons
-        paddingVertical={15}
-        onPress={handleLogin}
-        source={require("../../../assets/google.png")}
-        title={"Logga in med google"}
-        google={true}
-        facebook={false}
-      /> */}
-      {/* <Separator /> */}
       <TextInput
         style={globalStyles.textInput}
         value={email}
@@ -100,7 +73,7 @@ const Login: React.FC = () => {
         placeholderTextColor="#706F70"
         onChangeText={(text) => setPassword(text)}
         autoCapitalize="none"
-        // secureTextEntry
+        secureTextEntry
       />
 
       <Button text="Login" onPress={handleLogin} />

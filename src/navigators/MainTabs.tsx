@@ -13,11 +13,11 @@ const MainTabNavigator = () => {
   return (
     <Tab.Navigator
     screenOptions={({ route }) => ({
-     tabBarActiveTintColor: color.green,
+     tabBarActiveTintColor: color.orange,
       tabBarInactiveTintColor: color.lightGrey,
       tabBarShowLabel: true,
      tabBarStyle:{
-       backgroundColor:color.black,
+       backgroundColor:color.lightgreen,
        borderTopLeftRadius:15,
        borderTopRightRadius:15,
        paddingHorizontal:10,

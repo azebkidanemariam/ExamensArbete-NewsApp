@@ -10,7 +10,7 @@ const Logo = (props: LogoProps) => {
   return (
     <Image
       style={{ width: props.width, height: props.height }}
-      source={require("../../assets/favicon.png")}
+      source={require("../../assets/arrow.png")}
     />
   );
 };
