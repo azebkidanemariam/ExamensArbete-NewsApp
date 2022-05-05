@@ -15,7 +15,7 @@ import { UserContext } from "../../contexts/user/UserContext";
 import { Article } from "../../contexts/content/types";
 import { useNavigation } from "@react-navigation/native";
 import globalStyles from "../../styles/styles";
-import Styles from "../Home/styles";
+import Styles from "../home/styles";
 import Button from "../../components/Button";
 import Logo from "../../components/Logo";
 import { color } from "../../styles/baseStyles";
