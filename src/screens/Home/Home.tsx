@@ -40,7 +40,6 @@ const Home: React.FC = () => {
 
   const renderItem: ListRenderItem<Article> = ({ item }) => {
     if (item.fields.featureImage) {
-      <Header home />;
       return (
         <>
           <Text style={Styles.headText}>{item.fields.title}</Text>
@@ -85,6 +84,7 @@ const Home: React.FC = () => {
 
   return (
     <>
+    {/* <Header home /> */}
       <View style={Styles.container}>
         {articles && articles.length ? (
           <>

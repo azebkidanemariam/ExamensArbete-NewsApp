@@ -18,7 +18,7 @@ const Header = (props: HeaderProps) => {
     <View style={[styles.header, { paddingTop: insets.top + 10}]}>
       {props.home ? (
         <View style={styles.headerHome}>
-          <Logo width={60} height={60} />
+          <Logo width={50} height={45} />
         </View>
       ) : (
         <View style={{ flexDirection: "row" }}>
@@ -52,7 +52,7 @@ export default Header;
 const styles = StyleSheet.create({
   header: {
     alignItems: "flex-end",
-    backgroundColor: "#fff",
+    backgroundColor: color.white,
     elevation: 5,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     paddingHorizontal: 10,
-    paddingTop: 20,
+    /* paddingTop: 20, */
     paddingBottom: 10,
   },
   iconContainer: {

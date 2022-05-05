@@ -10,8 +10,6 @@ export default StyleSheet.create({
     width: 150,
     padding: 0,
     marginStart: 10,
-    borderBottomEndRadius:10,
-    borderTopStartRadius:10,
     alignSelf: "flex-end",
   },
   articleList: {
