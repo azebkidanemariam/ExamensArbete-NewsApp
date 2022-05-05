@@ -39,10 +39,10 @@ const SingleArticle = (props: ArticleProps) => {
     .map((paragraph: any) => paragraph.content[0].value)
     .join("\n\n");
 
-  const handleCelebrityBio = (celebrity: Celebrity) => {
+ /*  const handleCelebrityBio = (celebrity: Celebrity) => {
     //@ts-ignore
     navigation.navigate("Bio", { celebrity });
-  };
+  }; */
   const handleArticle = (article: any) => {
     //@ts-ignore
     navigation.navigate("Articles", { article });
