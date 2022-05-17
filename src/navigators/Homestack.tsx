@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Home from '../screens/Home/Home';
-import Article from '../screens/Home/SingleArticle'; 
+import Home from '../screens/home/Home';
+import Article from '../screens/home/SingleArticle'; 
 import { createStackNavigator } from "@react-navigation/stack";;
 
 const Stack = createStackNavigator();
@@ -11,7 +11,7 @@ const HomeStack = () => {
     <Stack.Navigator 
     screenOptions={{headerShown:false}}
     initialRouteName="Home">
-    <Stack.Screen name="Home" component={Home} />
+    <Stack.Screen name="Homescreen" component={Home} />
     <Stack.Screen name="Article" component={Article} />
   </Stack.Navigator>
   )

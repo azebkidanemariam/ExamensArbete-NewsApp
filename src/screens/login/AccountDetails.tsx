@@ -157,7 +157,7 @@ const AccountDetails: React.FC = () => {
       dob
     );
     //@ts-ignore
-    navigation.navigate("Valj plan");
+    navigation.navigate("Logga in");
   };
 
 
