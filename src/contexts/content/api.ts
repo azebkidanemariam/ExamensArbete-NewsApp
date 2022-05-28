@@ -2,8 +2,8 @@ import axios from "axios";
 import { Platform } from "react-native";
 import { Article, Celebrity, Ad, Pagination } from "./types";
 
-const HOST = Platform.OS === "ios" ? "localhost" : "10.0.2.2";
-const API = axios.create({ baseURL: `http://${HOST}:3000/api/content` });
+const HOST =  "10.0.2.2";
+const API = axios.create({ baseURL: `http://192.168.1.253:3000/api/content` });
 
 export const getArticles = async (pagination: Pagination, token: string) => {  
   const response = await API.post("/articles", {

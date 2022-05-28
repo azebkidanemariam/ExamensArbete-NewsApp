@@ -18,7 +18,7 @@ export default StyleSheet.create({
   },
   articleCard: {
     borderRadius: 5,
-    marginBottom: 10,
+    /* marginBottom: 10, */
     height: 240,
     width: "100%",
   },
@@ -30,7 +30,7 @@ export default StyleSheet.create({
     marginTop: -20,
     paddingTop: 30,
     paddingBottom: 10,
-    paddingHorizontal: 20,
+    /* paddingHorizontal: 20, */
     paddingVertical: 20,
   },
   button: {
@@ -71,15 +71,15 @@ export default StyleSheet.create({
     color: color.green,
   },
   headline: {
-    color: color.black,
+    color: color.headlineGreen,
     fontSize: 20,
     fontWeight: 'bold',
-    paddingHorizontal: 20,
     paddingBottom: 5,
     marginTop: 20,
     marginBottom:5,
     lineHeight:30,
     letterSpacing:0.5,
+    alignSelf:'flex-start',
   },
   headlineMoreArticle: {
     color: color.lightgreen,
@@ -98,6 +98,9 @@ export default StyleSheet.create({
     width: 189,
     padding: 0,
     margin: 0,
+  },
+  imageContainer:{
+    marginVertical: 20,
   },
   textInput: {
     backgroundColor: color.white,
@@ -147,6 +150,15 @@ export default StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 5,
     color:'black'
+  },
+  paragraph: {
+    fontSize: 16,
+    fontWeight: "normal",
+    paddingHorizontal: 20,
+    color: color.lightgreen,
+    lineHeight: 25,
+    letterSpacing: 0.1,
+    fontFamily: "Arial",
   },
   wrapper: {
     backgroundColor:color.white,

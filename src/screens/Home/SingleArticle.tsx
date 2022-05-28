@@ -6,18 +6,19 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import { UserContext } from "../../contexts/user/UserContext";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import globalStyles from "../../styles/styles";
-import styles from "./styles";
+/* import styles from "./styles"; */
 import { Video } from "expo-av";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { Celebrity, Article } from "../../contexts/content/types";
+import { Article } from "../../contexts/content/types";
 import { ContentContext } from "../../contexts/content/ContentContext";
 import Ad from "../../components/Ad";
 import Styles from "./styles";
+import globalStyle from "../../GlobalStyles/styles";
 
-interface ArticleProps {
+interface NewsProps {
   route: {
     params: {
       article: Article;
@@ -25,115 +26,104 @@ interface ArticleProps {
   };
 }
 
-const SingleArticle = (props: ArticleProps) => {
+const SingleNews = (props: NewsProps) => {
   const navigation = useNavigation();
   const { articles } = useContext(ContentContext)!;
-
+  const scrollRef: React.MutableRefObject<any> = useRef();
   const { headline, preamble, body, images, featureImage, video } =
     props.route.params.article.fields;
-  console.log(preamble[0]);
 
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const textBody = body.content
+  const paragraph = body.content
     .map((paragraph: any) => paragraph.content[0].value)
     .join("\n\n");
 
- /*  const handleCelebrityBio = (celebrity: Celebrity) => {
-    //@ts-ignore
-    navigation.navigate("Bio", { celebrity });
-  }; */
-  const handleArticle = (article: any) => {
-    //@ts-ignore
-    navigation.navigate("Articles", { article });
-  };
-
+  useEffect(() => {
+    scrollRef.current!.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  }, [props.route.params.article]);
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView style={{ flexGrow: 1 }}>
-        <View style={globalStyles.container}>
+    <SafeAreaView style={globalStyle.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        ref={scrollRef}
+        style={{ flexGrow: 1, backgroundColor: '"red"' }}
+      >
+        <View>
+        <Text style={globalStyles.headline}>{headline}</Text>
           <Image
-            style={styles.featureImage}
+            style={globalStyle.featureImage}
             source={{
               uri: `https:${featureImage.fields.file.url}`,
             }}
           />
-        </View>
-        <View
-          style={globalStyles.Articlecontainer}
-          {...{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }}
-        >
-          <Text style={globalStyles.headlineText}>{headline}</Text>
-          <Text style={globalStyles.preambel}>{preamble}</Text>
-          <Text style={globalStyles.body}>{textBody}</Text>
+
+          
+
+          <Image
+            style={globalStyles.featureImage}
+            source={{
+              uri: `https:${featureImage.fields.file.url}`,
+            }}
+          />
+          <Text style={globalStyle.preamble}>{preamble}</Text>
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+            {images
+              ? images.map((img: any) => (
+                  <View key={img.sys.id}>
+                    <Image
+                      style={globalStyle.image}
+                      source={{
+                        uri: `https:${img.fields.file.url}`,
+                      }}
+                    />
+                  </View>
+                ))
+              : null}
+          </ScrollView>
+          <Text style={globalStyle.paragraph}>{paragraph}</Text>
+          <View>
+
           {video ? (
             <Video
-              style={styles.video}
+              style={Styles.video}
               source={{
                 uri: `https:${video.fields.file.url}`,
               }}
               useNativeControls
-              resizeMode="contain"
+              /*  resizeMode="contain" */
               isLooping
             />
           ) : null}
-        </View>
-        <View style={globalStyles.container}>
-
-        <ScrollView horizontal={true}>
-          {images
-            ? images.map((img: any) => (
-                <View key={img.sys.id}>
-                  <Image
-                    style={globalStyles.image}
-                    source={{
-                      uri: `https:${img.fields.file.url}`,
-                    }}
-                  />
-                </View>
-              ))
-            : null}
-        </ScrollView>
-        </View>
-        <View style={globalStyles.wrapper}>
-
-        <Ad />
-        <Text style={globalStyles.moreArticle}>Fler artiklar</Text>
-
-        {articles.length ? (
-          <ScrollView>
-            {articles.map((item) => (
-              <Pressable key={item.sys.id} onPress={() => handleArticle(item)}>
-                {item.fields.featureImage ? (
-                  <View>
-                    <>
-                    <View style={Styles.articleDivider}></View>
+          </View>
+          {/* <View style={globalStyles.imageContainer}>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+            >
+              {images
+                ? images.map((img: any) => (
+                    <View key={img.sys.id}>
                       <Image
-                        style={globalStyles.articleListimg}
+                        style={globalStyles.image}
                         source={{
-                          uri: `https:${item.fields.featureImage.fields.file.url}`,
+                          uri: `https:${img.fields.file.url}`,
                         }}
                       />
-                        <View style={globalStyles.moreArticleContainer}>
-                        <Text numberOfLines={2} style={globalStyles.headlineMoreArticle}>
-                          {item.fields.headline}
-                        </Text>
-                        <Text numberOfLines={5} style={globalStyles.body}>
-                          {item.fields.preamble}
-                        </Text>
-                      </View>
-                    </>
-                  </View>
-                ) : null}
-              </Pressable>
-            ))}
-          </ScrollView>
-        ) : null}
-        </View>
+                    </View>
+                  ))
+                : null}
+            </ScrollView>
+          </View> */}
 
+          <Ad />
+        </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default SingleArticle;
+export default SingleNews;
+
+const styles = StyleSheet.create({});

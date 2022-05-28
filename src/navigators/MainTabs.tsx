@@ -6,14 +6,19 @@ import Music from "../screens/main/Music";
 import { color } from "../styles/baseStyles";
 import { HomeIcon, SettingsIcon, MusicIcon,DiscoverIcon,HeartIcon } from "../components/icons";
 import HomeStack from "./Homestack";
+import SettingStack from "./Settingstack";
+import { Dimensions,Platform } from "react-native"
 
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
+  const extraTabBarPadding =
+    Platform.OS === "ios" && Dimensions.get("screen").height > 800;
   return (
     <Tab.Navigator
     screenOptions={({ route }) => ({
-     tabBarActiveTintColor: color.orange,
+      headerShown: false,
+     tabBarActiveTintColor: color.green,
       tabBarInactiveTintColor: color.lightGrey,
       tabBarShowLabel: true,
      tabBarStyle:{
@@ -50,7 +55,7 @@ const MainTabNavigator = () => {
       <Tab.Screen name="Discover" component={Discover} />
       <Tab.Screen name="Favorites" component={Favorites} />
       <Tab.Screen name="Music" component={Music} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen name="Settings" component={SettingStack} />
     </Tab.Navigator>
   );
 };

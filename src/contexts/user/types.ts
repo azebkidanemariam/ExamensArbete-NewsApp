@@ -2,58 +2,46 @@ import { Celebrity } from "../content/types"
 
 export interface UserContextInterface {
   user: User | null;
+  userOnboarded: boolean;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  register: (
-    name: string,
-    email: string,
-    password: string,
-    categories: object,
-    favorites: object,
-    account: object,
-    gender: string,
-    dob: Date
-  ) => Promise<void>;
+  register: (user: User) => Promise<boolean>;
   getStorageData: () => void;
   setCategories: (categories: string[]) => Promise<void>;
   addFollow: (id: string) => Promise<void>;
   removeFollow: (id: string) => Promise<void>;
   removeCategory: (id: string) => Promise<void>;
   userCategories: string[];
-  passwordReset:(email: string) => Promise<void>;
-  addMemberAndSendEmail: (receiver: string) => Promise<boolean>
-  removeMemberAndSendEmail: (receiver: string) => Promise<boolean>
-  accountMembers: string[]
-  setAccountMembers: React.Dispatch<React.SetStateAction<string[]>>
-  userFollows: Celebrity[],
-  setUserFollows: React.Dispatch<React.SetStateAction<Celebrity[]>>
+  passwordReset: (email: string) => Promise<void>;
+  userFollows: Celebrity[];
+  setUserFollows: React.Dispatch<React.SetStateAction<Celebrity[]>>;
   changeUserPassword: (
     newPassword: string,
     currentPassword: string
   ) => Promise<boolean>;
   errorState: boolean;
   setErrorState: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteUserAccount: () => Promise<void>;
 }
 
 export interface User {
-  id: string;
+  id?: string;
   name: string;
+  password: string;
   email: string;
-  categories: string[];
-  favorites: string[];
-  follows: string[];
-  dob: object;
-  account: Account;
-  gender: string;
+  categories?: string[];
+  favorites?: string[];
+  follows?: string[];
+  onboarded?: boolean;
 }
 
-export enum AccountType {
+/* export enum AccountType {
   basic = "basic",
   family = "family",
-}
+} */
 
-export interface Account {
+/* export interface Account {
   id: string;
   owner: string;
   members: string[];
@@ -63,4 +51,4 @@ export interface Account {
   renewal: Date;
   payment: string;
   notifications: boolean;
-}
+} */

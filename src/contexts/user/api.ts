@@ -1,9 +1,10 @@
 import { Platform } from "react-native";
 import axios from "axios";
-import { Account } from './types';
+import { User } from "./types";
 
-const HOST = Platform.OS === "ios" ? "localhost" : "10.0.2.2";
-const API = axios.create({ baseURL: `http://${HOST}:3000/api/users` });
+
+const HOST =  "10.0.2.2";
+const API = axios.create({ baseURL: `http://192.168.1.253:3000/api/users` });
 
 export const setCategories = async (categories: string[], token: string) => {
   try {
@@ -83,29 +84,13 @@ export const passwordReset = async (email: string) => {
   return response;
 };
 
-export const register = async (
-  name: string,
-  email: string,
-  password: string,
-  categories: object,
-  favorites: object,
-  account: object,
-  gender: string,
-  dob: Date
-) => {
+export const register = async (user: User) => {
   try {
     await API.post("/register", {
-      name,
-      email,
-      password,
-      categories,
-      favorites,
-      follows: [],
-      account,
-      dob,
-      gender,
+      name: user.name,
+      email: user.email,
+      password: user.password,
     });
-    console.log("User has successfully register");
   } catch (error) {
     console.log(error);
   }
@@ -150,6 +135,31 @@ export const updateUserPassword = async (
       { password, currentPassword },
       { headers: { authorization: `Bearer ${token}` } }
     );
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const onboardUser = async (token: string) => {
+  try {
+    const response = await API.put(
+      "/update",
+      { onboarded: true },
+      { headers: { authorization: `Bearer ${token}` } }
+    );
+    return {
+      response,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+//delete user account, await remove from backend
+export const deleteUserAccount = async (token: string) => {
+  try {
+    await API.delete("/remove", {
+      headers: { authorization: `Bearer ${token}` },
+    });
     return true;
   } catch (error) {
     return false;

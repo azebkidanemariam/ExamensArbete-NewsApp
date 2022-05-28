@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     letterSpacing:0.2,
     marginTop: 5,
     marginBottom: 20,
-    paddingHorizontal: 20,
+  
     paddingBottom: 20,
   },
   articleDivider: {
@@ -101,9 +101,8 @@ const styles = StyleSheet.create({
     
   },
   headText:{
-    justifyContent:'center',
-    alignSelf:'center',
-    paddingHorizontal:10,
+
+    alignSelf:'flex-start',
     paddingTop:20,
     paddingBottom:10,
     color:color.lightgreen,

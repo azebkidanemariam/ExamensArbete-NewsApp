@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { User, UserContextInterface, Account } from './types';
+import { User, UserContextInterface } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Celebrity } from "../content/types";
 import { Alert } from "react-native";
 import * as API from "./api";
-import * as ContentAPI from '../content/api'
+import * as ContentAPI from "../content/api";
 import Password from "../../screens/settings/Password";
 import { InvalidCredentials, InvalidUser } from "../../errors";
 
@@ -16,18 +16,20 @@ export const UserContext = React.createContext<UserContextInterface | null>(
 const UserContextProvider: React.FC = (props) => {
   const [user, setUser] = useState<User | null>(null);
   const [userCategories, setUserCategories] = useState<string[]>([]);
-  const [userFollows, setUserFollows] = useState<Celebrity[]>([])
+  const [userFollows, setUserFollows] = useState<Celebrity[]>([]);
   const [accountMembers, setAccountMembers] = useState<string[]>([]);
   const [token, setToken] = useState<string | null>(null);
   const [errorState, setErrorState] = useState<boolean>(false);
+  const [userOnboarded, setUserOnboarded] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (user && user.categories) {
       if (user.categories.length >= 3) {
         setUserCategories(user.categories);
       }
-      if (user.account && user.account.owner === user.id) {
-        setAccountMembers(user.account.members);
+
+      if (user.onboarded) {
+        setUserOnboarded(true);
       }
     }
   }, [user]);
@@ -35,11 +37,11 @@ const UserContextProvider: React.FC = (props) => {
   const login = async (email: string, password: string) => {
     setErrorState(false);
     try {
-      console.log("login arguments", email,password)
+      console.log("login arguments", email, password);
 
       const response = await API.login(email, password);
-      console.log("API.login response: ", response)
-      console.log("API.login response: ", response)
+      console.log("API.login response: ", response);
+      console.log("API.login response: ", response);
 
       if (response) {
         setUser(response.user);
@@ -61,7 +63,7 @@ const UserContextProvider: React.FC = (props) => {
       // console.log(userToken)
       if (userToken != null) {
         const response = await API.getUser(userToken);
-       
+
         if (response.data.message === "Unauthorized") {
           Alert.alert("User unauthorized", "Try again", [
             {
@@ -81,7 +83,7 @@ const UserContextProvider: React.FC = (props) => {
     }
   };
 
-  const addMemberAndSendEmail = async (receiver: string) => {
+  /* const addMemberAndSendEmail = async (receiver: string) => {
     const owner = { name: user!.name, email: user!.email };
 
     const response = await API.addMemberAndSendEmail(owner, receiver, token!);
@@ -111,74 +113,51 @@ const UserContextProvider: React.FC = (props) => {
 
     return response.success as boolean;
   };
+ */
 
-  const register = async (
-    name: string,
-    email: string,
-    password: string,
-    categories: object,
-    favorites: object,
-    account: object,
-    gender: string,
-    dob: Date
-  ) => {
+  const register = async (user: User) => {
     try {
-      await API.register(
-        name,
-        email,
-        password,
-        categories,
-        favorites,
-        account,
-        gender,
-        dob
-      );
-      
-    try {
-      console.log("Logging in ", email, password)
-    const response = await API.login(email,password)
-    if (response && response.token){
-      await AsyncStorage.setItem("token", response.token);
-    }      
-    } catch (error) {
-      
-}
+      await API.register(user);
+      await login(user.email, user.password);
 
-      console.log("User has successfully register");
+      return true;
     } catch (error) {
-      throw new InvalidCredentials();
+      return false;
     }
   };
 
- 
-
   const setCategories = async (categories: string[]) => {
     try {
-      user?.categories.push(...categories);
-      setUserCategories(user!.categories);
-      API.setCategories(user!.categories, token!);
+      user?.categories!.push(...categories);
+      setUserCategories(user?.categories!);
+      await API.setCategories(user?.categories!, token!);
+      setUserOnboarded(true);
+      await API.onboardUser(token!);
     } catch (error) {
       console.log(error);
     }
   };
 
   const removeCategory = async (id: string) => {
+    if (!user || !user.categories) return;
     try {
-      user!.categories = user!.categories.filter((category) => category !== id);
-      setUserCategories(user!.categories);
-      API.setCategories(user!.categories, token!);
+      user.categories = user.categories.filter((category) => category !== id);
+      setUserCategories(user.categories);
+      API.setCategories(user.categories, token!);
     } catch (error) {
       console.log(error);
     }
   };
 
   const addFollow = async (id: string) => {
-    try {
-      user!.follows.push(id);
-      const celeb = await ContentAPI.getCelebrityById(id, token!)
+    if (!user || !user.follows) return;
 
-      if (celeb) {        
-        setUserFollows((prev) => [...prev, celeb])
+    try {
+      user.follows.push(id);
+      const celeb = await ContentAPI.getCelebrityById(id, token!);
+
+      if (celeb) {
+        setUserFollows((prev) => [...prev, celeb]);
       }
       API.setFollows(user!.follows, token!);
     } catch (error) {
@@ -195,10 +174,12 @@ const UserContextProvider: React.FC = (props) => {
   };
 
   const removeFollow = async (id: string) => {
+    if (!user || !user.follows) return;
+
     try {
-      user!.follows = user!.follows.filter((follows) => follows !== id);
-      setUserFollows(userFollows.filter(celeb => celeb.sys.id !== id))
-      API.setFollows(user!.follows, token!);
+      user.follows = user.follows.filter((follows) => follows !== id);
+      setUserFollows(userFollows.filter((celeb) => celeb.sys.id !== id));
+      API.setFollows(user.follows, token!);
     } catch (error) {
       console.log(error);
     }
@@ -224,9 +205,16 @@ const UserContextProvider: React.FC = (props) => {
     );
     return success;
   };
+  const deleteUserAccount = async () => {
+    const success = await API.deleteUserAccount(token!);
+    if (success) {
+      logout();
+    }
+  };
 
   const userContext: UserContextInterface = {
     user,
+    userOnboarded,
     login,
     logout,
     token,
@@ -236,10 +224,7 @@ const UserContextProvider: React.FC = (props) => {
     removeCategory,
     userCategories,
     passwordReset,
-    addMemberAndSendEmail,
-    removeMemberAndSendEmail,
-    accountMembers,
-    setAccountMembers,
+    deleteUserAccount,
     changeUserPassword,
     addFollow,
     removeFollow,
