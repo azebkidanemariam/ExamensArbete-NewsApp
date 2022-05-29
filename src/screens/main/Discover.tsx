@@ -8,6 +8,7 @@ import {
   Pressable,
   Modal,
   StyleSheet,
+  SafeAreaView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { ContentContext } from "../../contexts/content/ContentContext";
@@ -42,6 +43,7 @@ const Discover: React.FC = () => {
   const renderItem: ListRenderItem<Article> = ({ item }) => {
     if (item.fields.featureImage) {
       return (
+        
         <>
 
        
@@ -86,9 +88,10 @@ const Discover: React.FC = () => {
   };
 
   return (
+    <SafeAreaView>
     <>
 
-      <View style={globalStyles.container}>
+      <View >
         {articles && articles.length ? (
           <>
           <FlatList
@@ -105,6 +108,7 @@ const Discover: React.FC = () => {
         )}
       </View>
     </>
+    </SafeAreaView>
   );
 };
 export default Discover;

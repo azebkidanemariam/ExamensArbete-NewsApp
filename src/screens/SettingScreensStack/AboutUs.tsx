@@ -6,17 +6,18 @@ import globalStyle from "../../GlobalStyles/styles";
 
 const About: React.FC = () => {
   return (
-    <SafeAreaView style={globalStyle.container}>
-        <View>
-          <Text style={styles.headlineText}>Our Story</Text>
-        </View>
+    <SafeAreaView style={globalStyle.container} >
       <ScrollView>
+      <View style={styles.container}>
 
-        <View style={styles.container}>
+      <Text style={styles.headlineText}>Our Story</Text>
+      </View>
           <Image
             style={styles.image}
             source={require("../../../assets/images/about.jpg")}
           />
+
+        <View style={globalStyle.container}>
           <Text style={globalStyle.paragraph}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -53,20 +54,21 @@ export default About;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: color.white,
-    /* height: 200, */
+    height: 200,
   },
   headlineText: {
     alignSelf: "center",
     fontSize: 27,
     fontWeight: "bold",
-    marginTop: 60,
+   /*  marginTop: 60, */
+    margin:50,
     color: color.headlineGreen,
   },
   image: {
-    width: 350,
-    height: 200,
-    marginTop: 70,
-    alignSelf: "center",
-    marginBottom: 50,
+    height: 300,
+    width: '100%',
+    borderRadius: 1,
+    alignSelf: "flex-start",
+    marginTop:-70
   },
 });
