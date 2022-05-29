@@ -37,7 +37,7 @@ const MainTabNavigator = () => {
         if (route.name === "Settings") {
           return <SettingsIcon size={size} color={color} />;
         }
-        if (route.name === "Favorites") {
+        if (route.name === "For You") {
           return <HeartIcon size={size} color={color} />;
         }
         if (route.name === "Discover") {
@@ -53,7 +53,7 @@ const MainTabNavigator = () => {
   >
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Discover" component={Discover} />
-      <Tab.Screen name="Favorites" component={Favorites} />
+      <Tab.Screen name="For You" component={Favorites} />
       <Tab.Screen name="Music" component={Music} />
       <Tab.Screen name="Settings" component={SettingStack} />
     </Tab.Navigator>

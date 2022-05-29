@@ -5,6 +5,7 @@ import ChangePassword from '../screens/SettingScreensStack/ChangePassword'
 import Menu from '../screens/SettingScreensStack/Menu'
 import Policies from '../screens/SettingScreensStack/Policies'
 import SignOut from '../screens/SettingScreensStack/SignOut'
+import Help from '../screens/SettingScreensStack/Help'
 import { createStackNavigator } from '@react-navigation/stack'
 
 const Stack = createStackNavigator()
@@ -19,6 +20,7 @@ const SettingStack = () => {
        <Stack.Screen name='ChangePassword' component={ChangePassword} />
        <Stack.Screen name='SignOut' component={SignOut} />
        <Stack.Screen name='Policies' component={Policies} />
+       <Stack.Screen name='Help' component={Help} />
 
    </Stack.Navigator>
   )

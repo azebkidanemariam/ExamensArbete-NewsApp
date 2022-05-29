@@ -1,4 +1,11 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+} from "react-native";
 import React from "react";
 import globalStyles from "../../styles/styles";
 import globalStyle from "../../GlobalStyles/styles";
@@ -6,9 +13,13 @@ import globalStyle from "../../GlobalStyles/styles";
 const Policies: React.FC = () => {
   return (
     <SafeAreaView>
+     
       <ScrollView>
         <View style={globalStyle.container}>
-            <Text style={globalStyles.headline}>Personal data policy, Paradox Sweden</Text>
+          <Text style={globalStyles.headline}>
+            Personal data policy, Paradox Sweden
+          </Text>
+         
           <Text style={globalStyle.paragraph}>
             The use of cookies and similar tracking technology within Paradox
           </Text>
@@ -80,4 +91,6 @@ const Policies: React.FC = () => {
 
 export default Policies;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+
+});

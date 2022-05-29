@@ -29,7 +29,7 @@ const Discover: React.FC = () => {
 
   const handleArticle = (article: any) => {
     //@ts-ignore
-    navigation.navigate("Article", { article });
+    navigation.navigate("SingleArticle", { article });
     console.log (article)
   };
 
